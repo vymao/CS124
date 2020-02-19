@@ -93,14 +93,14 @@ public class Fibonacci_Methods {
 
     public static void main(String[] args) {
         long startTime, endTime;
-        /*
+
         startTime = System.nanoTime();
         int recursive_solution = Fib_recursive(Integer.parseInt(args[0]));
         endTime = System.nanoTime();
         double Fib_recursive_time = ((double) (endTime - startTime) / ((double) 1000000000));
         System.out.println("Recursive solution: " + Integer.toString(recursive_solution));
         System.out.println("Recursive solution time: " + Double.toString(Fib_recursive_time) + " seconds");
-        */
+
         startTime = System.nanoTime();
         int iter_solution = Fib_iter(Long.parseLong(args[0]));
         endTime = System.nanoTime();

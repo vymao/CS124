@@ -1,6 +1,38 @@
-public class Graph {
-    private double[][] adj_matrix;
+import java.util.*;
 
+public class Graph {
+    public static class SparseMatrix<T> {
+        private T defaultValue;
+        private int m;
+        private int n;
+        public Map<Integer, T> data = new TreeMap<Integer, T>();
+        /// create a new matrix with m rows and n columns
+        public SparseMatrix(int m, int n, T defaultValue) {
+            this.m = m;
+            this.n = n;
+            this.defaultValue = defaultValue;
+        }
+        /// set value at [i,j] (row, col)
+        public void setValueAt(int i, int j, T value) {
+            if (i > m || j > n || i < 0 || j < 0)
+                throw new IllegalArgumentException(
+                        "index (" + i + ", " +j +") out of bounds");
+            data.put(i * n + j, value);
+        }
+        /// retrieve value at [i,j] (row, col)
+        public T getValueAt(int i, int j) {
+            if (i > m || j > n || i < 0 || j < 0)
+                throw new IllegalArgumentException(
+                        "index (" + i + ", " +j +") out of bounds");
+            T value = data.get(i * n + j);
+            return value != null ? value : defaultValue;
+        }
+    }
+
+    public SparseMatrix<Float> adj_matrix;
+    //private double[][] adj_matrix;
+
+    /*
     public Graph(int num_vertices) {
         adj_matrix = new double[num_vertices][num_vertices];
         for (int i = 0; i < num_vertices; i++) {
@@ -8,17 +40,33 @@ public class Graph {
                 if (i == j) {
                     adj_matrix[i][j] = 0;
                 } else {
-                    adj_matrix[i][j] = -1.0;
+                    adj_matrix[i][j] = 2.0;
                 }
             }
         }
     }
 
-    public double getEdge(int start_vertex, int end_vertex){
-        return adj_matrix[start_vertex][end_vertex];
+     */
+
+    public Graph(int num_vertices) {
+        adj_matrix = new SparseMatrix<Float>(num_vertices, num_vertices, 2.0f);
+        for (int i = 1; i <= num_vertices; i++) {
+            for (int j = i; j <= num_vertices; j++) {
+                adj_matrix.setValueAt(i, j, 2.0f);
+            }
+        }
+
     }
 
-    public void setEdge(int start_vertex, int end_vertex, double value) {
-        adj_matrix[start_vertex][end_vertex] = value;
+    public float getEdge(int start_vertex, int end_vertex){
+        return adj_matrix.getValueAt(start_vertex, end_vertex);
+        //return adj_matrix[start_vertex - 1][end_vertex - 1];
     }
+
+    public void setEdge(int start_vertex, int end_vertex, float value) {
+        adj_matrix.setValueAt(start_vertex, end_vertex, value);
+        //adj_matrix[start_vertex - 1][end_vertex - 1] = value;
+    }
+
+
 }

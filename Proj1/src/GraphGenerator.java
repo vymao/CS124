@@ -14,25 +14,25 @@ weight of an edge is just the Euclidean distance between its endpoints.
      */
     private static Random generator;
 
-    private static double euclideanDistance(double[] start, double[] end) {
-        double sum = 0;
+    public static float euclideanDistance(float[] start, float[] end) {
+        float sum = 0.0f;
         for (int i = 0; i < start.length; i++) {
-            sum = sum + Math.pow(start[i] - end[i], 2);
+            sum = sum + (float) Math.pow(start[i] - end[i], 2);
         }
 
-        return Math.sqrt(sum);
+        return (float) Math.sqrt(sum);
     }
 
     public static Graph generate1DGraph(int vertices) {
         int seed = 100;
         generator = new Random(seed);
-        double n;
+        float n;
         Graph g = new Graph(vertices);
 
         for (int start_vertex = 1; start_vertex <= vertices; start_vertex++) {
             for (int end_vertex = start_vertex; end_vertex <= vertices; end_vertex++) {
                 if (start_vertex != end_vertex) {
-                    n = generator.nextDouble();
+                    n = generator.nextFloat();
                     g.setEdge(start_vertex, end_vertex, n);
                 }
             }
@@ -44,15 +44,15 @@ weight of an edge is just the Euclidean distance between its endpoints.
     public static Graph generate2DGraph(int vertices) {
         int seed = 200;
         generator = new Random(seed);
-        double start, end;
+        float start, end;
         Graph g = new Graph(vertices);
 
         for (int start_vertex = 1; start_vertex <= vertices; start_vertex++) {
             for (int end_vertex = start_vertex; end_vertex <= vertices; end_vertex++) {
                 if (start_vertex != end_vertex) {
-                    double distance = euclideanDistance(
-                            new double[] {generator.nextDouble(), generator.nextDouble()},
-                            new double[] {generator.nextDouble(), generator.nextDouble()});
+                    float distance = euclideanDistance(
+                            new float[] {generator.nextFloat(), generator.nextFloat()},
+                            new float[] {generator.nextFloat(), generator.nextFloat()});
                     g.setEdge(start_vertex, end_vertex, distance);
                 }
             }
@@ -70,9 +70,9 @@ weight of an edge is just the Euclidean distance between its endpoints.
         for (int start_vertex = 1; start_vertex <= vertices; start_vertex++) {
             for (int end_vertex = start_vertex; end_vertex <= vertices; end_vertex++) {
                 if (start_vertex != end_vertex) {
-                    double distance = euclideanDistance(
-                            new double[] {generator.nextDouble(), generator.nextDouble(), generator.nextDouble()},
-                            new double[] {generator.nextDouble(), generator.nextDouble(), generator.nextDouble()});
+                    float distance = euclideanDistance(
+                            new float[] {generator.nextFloat(), generator.nextFloat(), generator.nextFloat()},
+                            new float[] {generator.nextFloat(), generator.nextFloat(), generator.nextFloat()});
                     g.setEdge(start_vertex, end_vertex, distance);
                 }
             }
@@ -84,15 +84,15 @@ weight of an edge is just the Euclidean distance between its endpoints.
     public static Graph generate4DGraph(int vertices) {
         int seed = 200;
         generator = new Random(seed);
-        double start, end;
+        float start, end;
         Graph g = new Graph(vertices);
 
         for (int start_vertex = 1; start_vertex <= vertices; start_vertex++) {
             for (int end_vertex = start_vertex; end_vertex <= vertices; end_vertex++) {
                 if (start_vertex != end_vertex) {
-                    double distance = euclideanDistance(
-                            new double[] {generator.nextDouble(), generator.nextDouble(), generator.nextDouble(), generator.nextDouble()},
-                            new double[] {generator.nextDouble(), generator.nextDouble(), generator.nextDouble(), generator.nextDouble()});
+                    float distance = euclideanDistance(
+                            new float[] {generator.nextFloat(), generator.nextFloat(), generator.nextFloat(), generator.nextFloat()},
+                            new float[] {generator.nextFloat(), generator.nextFloat(), generator.nextFloat(), generator.nextFloat()});
                     g.setEdge(start_vertex, end_vertex, distance);
                 }
             }

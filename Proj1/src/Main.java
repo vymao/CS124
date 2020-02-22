@@ -4,7 +4,8 @@ public class Main {
     public static void main(String[] args) {
         MST mst = new MST();
         GraphGenerator g = new GraphGenerator();
-        int vertices = 4096;
+        int vertices =  262144;
+         /*
         Graph graph1 = g.generate1DGraph(vertices);
 
         float test = mst.runMST(graph1, vertices);
@@ -23,9 +24,9 @@ public class Main {
         System.out.println(test);
         */
 
-        graph1 = g.generate4DGraph(vertices);
+        Graph graph1 = g.generate4DGraph(vertices);
 
-        test = mst.runMST(graph1, vertices);
+        float test = mst.runMST(graph1, vertices);
         System.out.println(test);
 
 

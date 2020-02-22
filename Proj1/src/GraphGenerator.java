@@ -14,6 +14,11 @@ weight of an edge is just the Euclidean distance between its endpoints.
      */
     private static Random generator;
 
+    public static float generateRandomCoordinate() {
+        generator = new Random();
+        return generator.nextFloat();
+    }
+
     public static float euclideanDistance(float[] start, float[] end) {
         float sum = 0.0f;
         for (int i = 0; i < start.length; i++) {
@@ -24,81 +29,19 @@ weight of an edge is just the Euclidean distance between its endpoints.
     }
 
     public static Graph generate1DGraph(int vertices) {
-        int seed = 100;
-        generator = new Random(seed);
-        float n;
-        Graph g = new Graph(vertices);
-
-        for (int start_vertex = 1; start_vertex <= vertices; start_vertex++) {
-            for (int end_vertex = start_vertex; end_vertex <= vertices; end_vertex++) {
-                if (start_vertex != end_vertex) {
-                    n = generator.nextFloat();
-                    g.setEdge(start_vertex, end_vertex, n);
-                }
-            }
-        }
-
-        return g;
+        return new Graph(vertices, 1);
     }
 
     public static Graph generate2DGraph(int vertices) {
-        int seed = 200;
-        generator = new Random(seed);
-        float start, end;
-        Graph g = new Graph(vertices);
-
-        for (int start_vertex = 1; start_vertex <= vertices; start_vertex++) {
-            for (int end_vertex = start_vertex; end_vertex <= vertices; end_vertex++) {
-                if (start_vertex != end_vertex) {
-                    float distance = euclideanDistance(
-                            new float[] {generator.nextFloat(), generator.nextFloat()},
-                            new float[] {generator.nextFloat(), generator.nextFloat()});
-                    g.setEdge(start_vertex, end_vertex, distance);
-                }
-            }
-        }
-
-        return g;
+        return new Graph(vertices, 2);
     }
 
     public static Graph generate3DGraph(int vertices) {
-        int seed = 200;
-        generator = new Random(seed);
-        double start, end;
-        Graph g = new Graph(vertices);
-
-        for (int start_vertex = 1; start_vertex <= vertices; start_vertex++) {
-            for (int end_vertex = start_vertex; end_vertex <= vertices; end_vertex++) {
-                if (start_vertex != end_vertex) {
-                    float distance = euclideanDistance(
-                            new float[] {generator.nextFloat(), generator.nextFloat(), generator.nextFloat()},
-                            new float[] {generator.nextFloat(), generator.nextFloat(), generator.nextFloat()});
-                    g.setEdge(start_vertex, end_vertex, distance);
-                }
-            }
-        }
-
-        return g;
+        return new Graph(vertices, 3);
     }
 
     public static Graph generate4DGraph(int vertices) {
-        int seed = 200;
-        generator = new Random(seed);
-        float start, end;
-        Graph g = new Graph(vertices);
-
-        for (int start_vertex = 1; start_vertex <= vertices; start_vertex++) {
-            for (int end_vertex = start_vertex; end_vertex <= vertices; end_vertex++) {
-                if (start_vertex != end_vertex) {
-                    float distance = euclideanDistance(
-                            new float[] {generator.nextFloat(), generator.nextFloat(), generator.nextFloat(), generator.nextFloat()},
-                            new float[] {generator.nextFloat(), generator.nextFloat(), generator.nextFloat(), generator.nextFloat()});
-                    g.setEdge(start_vertex, end_vertex, distance);
-                }
-            }
-        }
-
-        return g;
+        return new Graph(vertices, 4);
     }
 
 }

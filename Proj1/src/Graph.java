@@ -1,6 +1,8 @@
 import java.util.*;
 
 public class Graph {
+
+    /*
     public static class SparseMatrix<T> {
         private T defaultValue;
         private int m;
@@ -13,6 +15,8 @@ public class Graph {
             this.defaultValue = defaultValue;
         }
         /// set value at [i,j] (row, col)
+
+
         public void setValueAt(int i, int j, T value) {
             if (i > m || j > n || i < 0 || j < 0)
                 throw new IllegalArgumentException(
@@ -27,28 +31,21 @@ public class Graph {
             T value = data.get(i * n + j);
             return value != null ? value : defaultValue;
         }
-    }
 
-    public SparseMatrix<Float> adj_matrix;
+    }
+     */
+    public float[][] listNodes;
     //private double[][] adj_matrix;
 
-    /*
-    public Graph(int num_vertices) {
-        adj_matrix = new double[num_vertices][num_vertices];
+    public Graph(int num_vertices, int dimension) {
+        listNodes = new float[num_vertices][dimension];
+
         for (int i = 0; i < num_vertices; i++) {
-            for (int j = i; j < num_vertices; j++) {
-                if (i == j) {
-                    adj_matrix[i][j] = 0;
-                } else {
-                    adj_matrix[i][j] = 2.0;
-                }
+            for (int j = 0; j < dimension; j++) {
+                listNodes[i][j] = GraphGenerator.generateRandomCoordinate();
             }
         }
-    }
-
-     */
-
-    public Graph(int num_vertices) {
+        /*
         adj_matrix = new SparseMatrix<Float>(num_vertices, num_vertices, 2.0f);
         for (int i = 1; i <= num_vertices; i++) {
             for (int j = i; j <= num_vertices; j++) {
@@ -56,8 +53,15 @@ public class Graph {
             }
         }
 
+         */
+
     }
 
+    public float[] getCoordinate(int node) {
+        return listNodes[node];
+    }
+
+    /*
     public float getEdge(int start_vertex, int end_vertex){
         return adj_matrix.getValueAt(start_vertex, end_vertex);
         //return adj_matrix[start_vertex - 1][end_vertex - 1];
@@ -67,6 +71,8 @@ public class Graph {
         adj_matrix.setValueAt(start_vertex, end_vertex, value);
         //adj_matrix[start_vertex - 1][end_vertex - 1] = value;
     }
+
+     */
 
 
 }

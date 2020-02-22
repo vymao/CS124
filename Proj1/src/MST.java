@@ -24,20 +24,21 @@ public class MST {
     }
 
     private void setNeighbors(Graph g, int node, Boolean[] visited, float[] distance, int[] parent) {
-        for (int v = 1; v <= numVertices; v++) {
-
-            // graph[u][v] is non  zero only for adjacent vertices of m
-            // mstSet[v] is false for vertices not yet included in MST
-            // Update the key only if graph[u][v] is smaller than key[v]
-            float edge = g.getEdge(node, v);
-
-            //float edge = matrix[node][v];
-
-            if (edge != 2.0 && visited[v - 1] == false && edge < distance[v - 1]) {
-                parent[v - 1] = node;
-                distance[v - 1] = edge;
+        float[] start_coordinates = g.getCoordinate(node);
+        for (int v = 0; v < numVertices; v++) {
+            if (visited[v] == false) {
+                float[] end_coordinates = g.getCoordinate(v);
+                for (int dim = 0; dim < end_coordinates.length; dim++) {
+                    float length = GraphGenerator.euclideanDistance(start_coordinates, end_coordinates);
+                    //¸System.out.println("Start: " + Integer.toString(node) + ", End: " + Integer.toString(v) + ", Distance: " + Float.toString(length));
+                    if (length != 2.0 && length < distance[v]) {
+                        parent[v] = node;
+                        distance[v] = length;
+                    }
+                }
             }
         }
+
     }
 
 
@@ -57,14 +58,14 @@ public class MST {
         // picked as first vertex 
         parent[0] = -1;
 
-        for (int count = 1; count <= numVertices; count++) {
+        for (int count = 0; count < numVertices; count++) {
             // Pick thd minimum key vertex from the set of vertices 
             // not yet included in MST 
             int u = minKey(key, visitedSet);
 
             // Add the picked vertex to the MST Set 
             visitedSet[u] = true;
-            setNeighbors(g, u + 1, visitedSet, key, parent);
+            setNeighbors(g, u, visitedSet, key, parent);
         }
 
         return sum;

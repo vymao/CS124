@@ -6,10 +6,20 @@ public class MST {
     // Number of vertices in the graph 
     private int numVertices;
     private float sum = 0;
+    private float[] key;
 
     // A utility function to find the vertex with minimum key 
-    // value, from the set of vertices not yet included in MST 
-    private int minKey(float key[], Boolean visitedSet[]) {
+    // value, from the set of vertices not yet included in MST
+
+    public float maxEdge() {
+        float max = 0;
+        for (int v = 0; v < numVertices; v++)
+            if (key[v] > max) {
+                max = key[v];
+            }
+        return max;
+    }
+    private int minKey(Boolean visitedSet[]) {
         // Initialize min value 
         float min = Float.MAX_VALUE;
         int min_index = -1;
@@ -45,7 +55,7 @@ public class MST {
     public float runMST(Graph g, int vertices) {
         numVertices = vertices;
         int parent[] = new int[numVertices];
-        float key[] = new float[numVertices];
+        key = new float[numVertices];
         Boolean visitedSet[] = new Boolean[numVertices];
 
         for (int i = 0; i < numVertices; i++) {
@@ -61,7 +71,7 @@ public class MST {
         for (int count = 0; count < numVertices; count++) {
             // Pick thd minimum key vertex from the set of vertices 
             // not yet included in MST 
-            int u = minKey(key, visitedSet);
+            int u = minKey(visitedSet);
 
             // Add the picked vertex to the MST Set 
             visitedSet[u] = true;

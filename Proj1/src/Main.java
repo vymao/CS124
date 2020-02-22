@@ -4,12 +4,12 @@ public class Main {
     public static void constructCutOff1D() {
         GraphGenerator g = new GraphGenerator();
         //double[] results = new double[999];
-        for (int i = 1; i < 8000; i = i + 100) {
+        for (int i = 1; i < 2000; i = i + 10) {
             float trial_sum = 0;
             for (int j = 1; j < 5; j++) {
                 MST mst = new MST();
                 int vertices = i;
-                Graph graph1 = g.generate1DGraph(vertices);
+                Graph graph1 = g.generate2DGraph(vertices);
                 mst.runMST(graph1, vertices);
                 trial_sum += mst.maxEdge();
             }

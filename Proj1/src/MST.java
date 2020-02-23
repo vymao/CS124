@@ -19,21 +19,21 @@ public class MST {
             }
         return max;
     }
-    private int minKey(Boolean visitedSet[]) {
+    private int minKey(Boolean visitedSet[], float[] distance, int graph_size) {
         // Initialize min value 
         float min = Float.MAX_VALUE;
         int min_index = -1;
 
-        for (int v = 0; v < numVertices; v++)
-            if (visitedSet[v] == false && key[v] < min) {
-                min = key[v];
+        for (int v = 0; v < graph_size; v++)
+            if (visitedSet[v] == false && distance[v] < min) {
+                min = distance[v];
                 min_index = v;
             }
         sum += min;
         return min_index;
     }
 
-    private void setNeighbors(Graph g, int node, Boolean[] visited, float[] distance, int[] parent) {
+    private void setNeighbors(Graph g, int node, Boolean[] visited, float[] distance) {
         float[] start_coordinates = g.getCoordinate(node);
         for (int v = 0; v < numVertices; v++) {
             if (visited[v] == false) {
@@ -42,7 +42,6 @@ public class MST {
                     float length = GraphGenerator.euclideanDistance(start_coordinates, end_coordinates);
                     //¸System.out.println("Start: " + Integer.toString(node) + ", End: " + Integer.toString(v) + ", Distance: " + Float.toString(length));
                     if (length != 2.0 && length < distance[v]) {
-                        parent[v] = node;
                         distance[v] = length;
                     }
                 }
@@ -52,30 +51,46 @@ public class MST {
     }
 
 
-    public float runMST(Graph g, int vertices) {
+    private float cutOff() {
+        return 0.6f;
+    }
+
+
+    public Boolean[] runMST(Graph g, int vertices, float[] distances, Boolean visited[]) {
+        for (int i = 0; i < vertices; i++) {
+            distances[i] = Float.MAX_VALUE;
+            visited[i] = false;
+        }
+
+        distances[0] = 0;
+
+        for (int count = 0; count < vertices; count++) {
+            int u = minKey(visited,distances, vertices);
+
+            visited[u] = true;
+            setNeighbors(g, u, visited, distances);
+        }
+
+        return visited;
+    }
+
+    public float findMST(Graph g, int vertices) {
         numVertices = vertices;
-        int parent[] = new int[numVertices];
         key = new float[numVertices];
         Boolean visitedSet[] = new Boolean[numVertices];
 
-        for (int i = 0; i < numVertices; i++) {
-            key[i] = Float.MAX_VALUE;
-            visitedSet[i] = false;
+        Boolean[] visited = runMST(g, vertices, key, visitedSet);
+        int missing = 0;
+        for (int j = 0; j < visited.length; j++) {
+            if (visited[j] == false) {
+                missing += 1;
+            }
         }
+        if (missing != 0) {
+            float[] keyUnvisited = new float[missing];
+            Boolean visitedSetUnvisited[] = new Boolean[missing];
 
-        // Always include first 1st vertex in MST. 
-        key[0] = 0; // Make key 0 so that this vertex is 
-        // picked as first vertex 
-        parent[0] = -1;
-
-        for (int count = 0; count < numVertices; count++) {
-            // Pick thd minimum key vertex from the set of vertices 
-            // not yet included in MST 
-            int u = minKey(visitedSet);
-
-            // Add the picked vertex to the MST Set 
-            visitedSet[u] = true;
-            setNeighbors(g, u, visitedSet, key, parent);
+            runMST(g, missing, keyUnvisited, visitedSetUnvisited);
         }
 
         return sum;

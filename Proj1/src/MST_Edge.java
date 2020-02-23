@@ -41,7 +41,7 @@ public class MST_Edge {
         for (int v = 0; v < numVertices; v++) {
             if (visited[v] == false) {
                 float length = generator.nextFloat();
-                System.out.println("Start: " + Integer.toString(node) + ", End: " + Integer.toString(v) + ", Distance: " + Float.toString(length));
+                //System.out.println("Start: " + Integer.toString(node) + ", End: " + Integer.toString(v) + ", Distance: " + Float.toString(length));
                 if (length < distance[v]) {
                     distance[v] = length;
                 }

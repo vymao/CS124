@@ -10,13 +10,14 @@ public class Main {
                 MST mst = new MST();
                 int vertices = i;
                 Graph graph1 = g.generate2DGraph(vertices);
-                mst.runMST(graph1, vertices);
+                mst.findMST(graph1, vertices);
                 trial_sum += mst.maxEdge();
             }
             System.out.println(trial_sum / 5);
         }
     }
     public static void main(String[] args) {
+        /*
         GraphGenerator g = new GraphGenerator();
         //double[] results = new double[999];
         MST_Edge mst = new MST_Edge();
@@ -24,16 +25,18 @@ public class Main {
         float sum = mst.runMST(vertices);
         System.out.println(sum);
 
+         */
+
        // constructCutOff1D();
-          /*
+
         GraphGenerator g = new GraphGenerator();
         //double[] results = new double[999];
         MST mst = new MST();
-        int vertices = 1;
+        int vertices = 5;
         Graph graph1 = g.generate1DGraph(vertices);
-        mst.runMST(graph1, vertices);
-        System.out.println(mst.maxEdge());
-
+        float sum = mst.findMST(graph1, vertices);
+        System.out.println(sum);
+        /*
         MST mst = new MST();
         GraphGenerator g = new GraphGenerator();
         int vertices =  262144;

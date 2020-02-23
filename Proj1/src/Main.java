@@ -17,7 +17,14 @@ public class Main {
         }
     }
     public static void main(String[] args) {
-        constructCutOff1D();
+        GraphGenerator g = new GraphGenerator();
+        //double[] results = new double[999];
+        MST_Edge mst = new MST_Edge();
+        int vertices = 6;;
+        float sum = mst.runMST(vertices);
+        System.out.println(sum);
+
+       // constructCutOff1D();
           /*
         GraphGenerator g = new GraphGenerator();
         //double[] results = new double[999];

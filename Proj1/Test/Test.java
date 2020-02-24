@@ -36,14 +36,6 @@ public class Test {
     public static void testMatrix() {
     }
 
-    public static void testBoolean() {
-        Boolean test[][] = new Boolean[100000][1000000];
-        for (int i = 0; i < 100000; i++) {
-            for (int j = 0; j < 100000; j++) {
-                test[i][j] = true;
-            }
-        }
-    }
 
     public static void main(String[] args) {
         testGraph();
@@ -51,7 +43,7 @@ public class Test {
         testMST();
         testED();
         testMatrix();
-        //testBoolean();
+
 
     }
 }

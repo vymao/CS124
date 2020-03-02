@@ -1,18 +1,12 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import java.util.*;
 import java.lang.*;
 import java.io.*;
 
 public class MST_Edge {
-    // Number of vertices in the graph 
     private int numVertices;
     private float sum = 0;
     private float[] key;
     private Boolean[] visitedSet;
-
-    // A utility function to find the vertex with minimum key 
-    // value, from the set of vertices not yet included in MST
 
     public float maxEdge() {
         float max = 0;
@@ -68,11 +62,8 @@ public class MST_Edge {
         float cutoff = cutOff();
 
         for (int count = 0; count < numVertices; count++) {
-            // Pick thd minimum key vertex from the set of vertices 
-            // not yet included in MST 
             int u = minKey(visitedSet);
 
-            // Add the picked vertex to the MST Set 
             visitedSet[u] = true;
             setNeighbors(u, visitedSet, key);
         }

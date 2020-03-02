@@ -1,6 +1,7 @@
 import org.junit.*;
 
 import java.util.Map;
+import java.util.Random;
 
 public class Test {
     @org.junit.Test
@@ -19,11 +20,8 @@ public class Test {
 
     }
     */
-    public static void testMST() {
-        System.out.println("Passed testMST().");
 
 
-    }
 
     public static void testED() {
         float[] start = new float[] {5.0f, 1.0f};
@@ -33,16 +31,21 @@ public class Test {
         Assert.assertEquals(2.236, result, 0.01);
     }
 
-    public static void testMatrix() {
+    public static void test1D() {
+        randmst.run1D(6, 1);
+    }
+
+    public static void test4D() {
+        randmst.run4D(128, 5);
     }
 
 
     public static void main(String[] args) {
-        testGraph();
-        //testGraphGenerator();
-        testMST();
-        testED();
-        testMatrix();
+        randmst.run2D(128, 5);
+        randmst.run4D(128, 5);
+        randmst.run3D(128, 5);
+        float f = 100f;
+        System.out.println(f / (float) 10);
 
 
     }

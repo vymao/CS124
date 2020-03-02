@@ -2,7 +2,6 @@ import java.util.*;
 
 public class Graph {
     private float[][] listNodes;
-    //private double[][] adj_matrix;
 
     public Graph(int num_vertices, int dimension) {
         listNodes = new float[num_vertices][dimension];

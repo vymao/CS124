@@ -24,15 +24,12 @@ public class Test {
 
 
     public static void testED() {
-        float[] start = new float[] {5.0f, 1.0f};
-        float[] end = new float[] {3.0f, 2.0f};
+        float[] start = new float[] {0.9f, 0.8f, 0.7f, 0.6f};
+        float[] end = new float[] {0.2f, 0.3f, 0.4f, 0.5f};
         float result = GraphGenerator.euclideanDistance(start, end);
+        System.out.println(result);
 
-        Assert.assertEquals(2.236, result, 0.01);
-    }
-
-    public static void test1D() {
-        randmst.run1D(6, 1);
+        Assert.assertEquals(0.2,  result, 0.01);
     }
 
     public static void test4D() {
@@ -41,11 +38,10 @@ public class Test {
 
 
     public static void main(String[] args) {
-        randmst.run2D(128, 5);
-        randmst.run4D(128, 5);
-        randmst.run3D(128, 5);
-        float f = 100f;
-        System.out.println(f / (float) 10);
+        //testED();
+        //randmst.run2D(5, 1);
+        //randmst.run3D(5, 1);
+        randmst.run4D(5, 3);
 
 
     }

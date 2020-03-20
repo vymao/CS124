@@ -77,29 +77,37 @@ public class Solver {
         return sum;
     }
 
-    public static int[][] matrix_add_1(int cutoff, int[][][] submatrices) {
-        int[][][] strassen_sums = new int[10][cutoff - 1][cutoff - 1];
+    public static int[][][] matrix_add_1(int cutoff, int[][][] submatrices) {
+        int[][][] strassen_sums = new int[10][cutoff][cutoff];
         for (int i = 0; i < cutoff; i++) {
             for (int j = 0; j < cutoff; j++) {
                 strassen_sums[0][i][j] = submatrices[5][i][j] - submatrices[7][i][j];
-                strassen_sums[1][i][j] = submatrices[0][i][j] - submatrices[1][i][j];
-
-
-
-                sum[i][j] = m[i][j] + n[i][j];
+                strassen_sums[1][i][j] = submatrices[0][i][j] + submatrices[1][i][j];
+                strassen_sums[2][i][j] = submatrices[2][i][j] + submatrices[3][i][j];
+                strassen_sums[3][i][j] = submatrices[6][i][j] - submatrices[4][i][j];
+                strassen_sums[4][i][j] = submatrices[0][i][j] + submatrices[3][i][j];
+                strassen_sums[5][i][j] = submatrices[4][i][j] + submatrices[7][i][j];
+                strassen_sums[6][i][j] = submatrices[1][i][j] - submatrices[3][i][j];
+                strassen_sums[7][i][j] = submatrices[6][i][j] + submatrices[7][i][j];
+                strassen_sums[8][i][j] = submatrices[0][i][j] - submatrices[2][i][j];
+                strassen_sums[9][i][j] = submatrices[4][i][j] + submatrices[5][i][j];
             }
         }
-        return sum;
+        return strassen_sums;
     }
 
-    public static int[][] matrix_add_2(int[][] m, int[][] n) {
-        int[][] sum = new int[m.length][m.length];
-        for (int i = 0; i < m.length; i++) {
-            for (int j = 0; j < m.length; j++) {
-                sum[i][j] = m[i][j] + n[i][j];
+    public static int[][] matrix_add_2(int cutoff, int[][][] strassen_matrices) {
+        int[][] answer = new int[cutoff * 2][cutoff * 2];
+        for (int i = 0; i < cutoff; i++) {
+            for (int j = 0; j < cutoff; j++) {
+                answer[i][j] = strassen_matrices[4][i][j] + strassen_matrices[3][i][j] - strassen_matrices[1][i][j] + strassen_matrices[5][i][j];
+                answer[i][j + cutoff] = strassen_matrices[0][i][j] + strassen_matrices[1][i][j];
+                answer[i + cutoff][j] = strassen_matrices[2][i][j] + strassen_matrices[3][i][j];
+                answer[i + cutoff][j + cutoff] = strassen_matrices[4][i][j] + strassen_matrices[0][i][j] - strassen_matrices[2][i][j] - strassen_matrices[6][i][j];
+
             }
         }
-        return sum;
+        return answer;
     }
 
     public static int[][] Strassen(int[][] m1, int[][] m2) {
@@ -127,39 +135,16 @@ public class Solver {
                 System.arraycopy(m2[i], cutoff, submatrices[7][i - cutoff], 0, cutoff);
             }
 
-            int[][][] strassen_matrices = new int[7][cutoff - 1][cutoff - 1];
-            strassen_matrices[0] = Strassen(submatrices[0], matrix_subtract(submatrices[5], submatrices[7]));
-            strassen_matrices[1] = Strassen(matrix_add(submatrices[0], submatrices[1]), submatrices[7]);
-            strassen_matrices[2] = Strassen(matrix_add(submatrices[2], submatrices[3]), submatrices[4]);
-            strassen_matrices[3] = Strassen(submatrices[3], matrix_subtract(submatrices[6], submatrices[4]));
-            strassen_matrices[4] = Strassen(matrix_add(submatrices[0], submatrices[3]), matrix_add(submatrices[4], submatrices[7]));
-            strassen_matrices[5] = Strassen(matrix_subtract(submatrices[1], submatrices[3]), matrix_add(submatrices[6], submatrices[7]));
-            strassen_matrices[6] = Strassen(matrix_subtract(submatrices[0], submatrices[2]), matrix_add(submatrices[4], submatrices[5]));
+            int[][][] strassen_matrices = matrix_add_1(cutoff, submatrices);
+            strassen_matrices[0] = Strassen(submatrices[0], strassen_matrices[0]);
+            strassen_matrices[1] = Strassen(strassen_matrices[1], submatrices[7]);
+            strassen_matrices[2] = Strassen(strassen_matrices[2], submatrices[4]);
+            strassen_matrices[3] = Strassen(submatrices[3], strassen_matrices[3]);
+            strassen_matrices[4] = Strassen(strassen_matrices[4], strassen_matrices[5]);
+            strassen_matrices[5] = Strassen(strassen_matrices[6], strassen_matrices[7]);
+            strassen_matrices[6] = Strassen(strassen_matrices[8], strassen_matrices[9]);
 
-            int[][] answer = new int[m1.length][m1.length];
-
-            int[][] solutions = matrix_subtract(matrix_add(strassen_matrices[4], strassen_matrices[3]), matrix_subtract(strassen_matrices[1], strassen_matrices[5]));
-            for (int i = 0; i < cutoff; i++) {
-                System.arraycopy(solutions[i], 0, answer[i], 0, cutoff);
-            }
-
-            solutions = new int[cutoff - 1][cutoff - 1];
-            solutions = matrix_add(strassen_matrices[0], strassen_matrices[1]);
-            for (int i = 0; i < cutoff; i++) {
-                System.arraycopy(solutions[i], 0, answer[i], cutoff, cutoff);
-            }
-
-            solutions = new int[cutoff - 1][cutoff - 1];
-            solutions = matrix_add(strassen_matrices[2], strassen_matrices[3]);
-            for (int i = 0; i < cutoff; i++) {
-                System.arraycopy(solutions[i], 0, answer[i + cutoff], 0, cutoff);
-            }
-
-            solutions = new int[cutoff - 1][cutoff - 1];
-            solutions = matrix_subtract(matrix_add(strassen_matrices[4], strassen_matrices[0]), matrix_add(strassen_matrices[2], strassen_matrices[6]));
-            for (int i = 0; i < cutoff; i++) {
-                System.arraycopy(solutions[i], 0, answer[i + cutoff], cutoff, cutoff);
-            }
+            int[][] answer = matrix_add_2(cutoff, strassen_matrices);
 
             return answer;
         }

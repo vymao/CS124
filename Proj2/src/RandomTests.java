@@ -20,7 +20,7 @@ public class RandomTests {
         System.out.println(Math.log(8) % Math.log(2));
         System.out.println(Math.ceil(Math.log(8) / Math.log(2)));
 
-        int dim = 2;
+        int dim = 8;
         int[][] m1 = new int[dim][dim];
         //int[][] m1 = {{1, 2, 3}, {1, 2, 3}, {1, 2, 3}};
         //int[][] m1 = {{1, 2, 3, 4}, {1, 2, 3, 4}, {1, 2, 3, 4}, {1, 2, 3, 4}};
@@ -36,7 +36,7 @@ public class RandomTests {
         print2D(Solver.runStrassen(m1, m2));
         System.out.println("Standard: ");
         print2D(Solver.Standard(m1, m2));
-        //print2D(Solver.padMatrix(m1));
+        CutoffSolver.EquationSolver();
 
 
 

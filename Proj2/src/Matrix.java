@@ -13,8 +13,8 @@ public class Matrix {
         this.columns = columns;
     }
 
-    public Matrix getSubMatrix(int x, int y, int columns) {
-        return new Matrix(matrix, this.x + x , this.y + y, columns);
+    public Matrix getSubMatrix(int x, int y, int col) {
+        return new Matrix(matrix, this.x + x , this.y + y, col);
     }
 
     public int getValue(int row, int col) {

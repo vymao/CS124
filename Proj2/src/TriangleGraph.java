@@ -1,7 +1,18 @@
 import java.util.*;
+import java.util.concurrent.TransferQueue;
 
 public class TriangleGraph {
     final static int dim = 1024;
+
+    public static void print2D(int mat[][])
+    {
+        // Loop through all rows
+        for (int[] row : mat)
+
+            // converting each row as string
+            // and then printing in a separate line
+            System.out.println(Arrays.toString(row));
+    }
 
     public static int countTriangles(float prob) {
         int[][] graph = new int[dim][dim];
@@ -17,6 +28,8 @@ public class TriangleGraph {
             }
         }
 
+        //print2D(graph);
+
 
 
         int[][] graph2 = Solver.runStrassen(graph, graph, 15);
@@ -28,7 +41,9 @@ public class TriangleGraph {
         }
 
         sum = sum / 6;
-        //System.out.println("Triangles: " + Float.toString(sum));
+        System.out.println("Triangles: " + Float.toString(sum));
         return (int) sum;
     }
+
+
 }

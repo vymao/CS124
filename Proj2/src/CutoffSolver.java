@@ -2,7 +2,37 @@ import java.lang.Math.*;
 
 public class CutoffSolver {
 
+    public static int recursiveStrassen(int start, int end) {
+        if (start <= end) {
+            return 2 * start^3 - start^2;
+        } else {
+            if (start % 2 == 0) {
+                return 7 * (recursiveStrassen(start / 2, end)) + 18 * start^2;
+            } else {
+                return 7 * (recursiveStrassen((start + 1) / 2, end));
+            }
+        }
+    }
+
     public static void EquationSolver() {
+        int[] tests = new int[5];
+        tests[0] = 128;
+        tests[1] = 129;
+        tests[2] = 200;
+        tests[3] = 400;
+        tests[4] = 800;
+
+        for (int i = 0; i < tests.length; i ++) {
+            for (int j = 0; j < tests[i]; j++) {
+                int analytical_time = recursiveStrassen(tests[i], j);
+            }
+        }
+
+
+
+
+
+
         /*
         for (int i = 1; i <= 15; i++) {
             int  n          = 1 << i;

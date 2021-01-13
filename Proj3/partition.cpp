@@ -7,7 +7,12 @@
 #include <fstream>
 #include <stdlib.h>
 #include <math.h>
+#include <random>
+#include <chrono>
+
 using namespace std;
+using namespace std::chrono;
+
 template <typename T> vector<T> deepCopy(vector<T> array) {
     int* deepCopy = new int[array.size()];
     for(int i = 0; i <array.size(); i++)
@@ -296,15 +301,16 @@ vector<long long> readFile(string file) {
 
 
 int main(int argc, char *argv[]) {
+
     srand(time(NULL) );
     int flag;
     int algorithm;
     string input_file;
-
     flag = atoi(argv[1]);
     algorithm = atoi(argv[2]);
     input_file = string(argv[3]);
     int max_iter = 25000;
+
     if (flag == 0) {
         if (algorithm == 0) {
             vector<long long> values = readFile(input_file);
@@ -342,8 +348,78 @@ int main(int argc, char *argv[]) {
             cout << residual;
         }
     } else {
-        cout << "Hi";
+
+        random_device rd;
+        mt19937_64 gen(rd());
+
+        uniform_int_distribution<long long> distribution(1, 1000000000000);
+        max_iter = 25000;
+
+        ofstream output;
+        output.open ("/Users/vmao/Desktop/CS124/Proj3/100trials_output.txt");
+        output << "Karmarkar_Karp \t repeatedRandom \t hillClimbing \t simulatedAnnealing "
+                  "\t PPrepeatedRandom \t PPhillClimbing \t PPsimulatedAnnealing\n";
+        output.close();
+
+        ofstream times;
+        times.open ("/Users/vmao/Desktop/CS124/Proj3/100trials_times.txt");
+        times << "Karmarkar_Karp \t repeatedRandom \t hillClimbing \t simulatedAnnealing "
+                  "\t PPrepeatedRandom \t PPhillClimbing \t PPsimulatedAnnealing\n";
+        times.close();
+
+
+        for (int t = 0; t < 100; t++) {
+            vector<long long> inputs;
+            for (int i = 0; i < 100; i++) {
+                inputs.insert(inputs.end(), distribution(gen));
+            }
+            auto start = high_resolution_clock::now();
+            long long KKresidual = Karmarkar_Karp(inputs);
+            auto end = high_resolution_clock::now();
+            auto duration1 = std::chrono::duration_cast<std::chrono::microseconds>( end - start ).count();
+
+            start = high_resolution_clock::now();
+            long long RRresidual = repeatedRandom(inputs, max_iter);
+            end = high_resolution_clock::now();
+            auto duration2 = std::chrono::duration_cast<std::chrono::microseconds>( end - start ).count();
+
+            start = high_resolution_clock::now();
+            long long HCresidual = hillClimbing(inputs, max_iter);
+            end = high_resolution_clock::now();
+            auto duration3 = std::chrono::duration_cast<std::chrono::microseconds>( end - start ).count();
+
+            start = high_resolution_clock::now();
+            long long SAresidual = simulatedAnnealing(inputs, max_iter);
+            end = high_resolution_clock::now();
+            auto duration4 = std::chrono::duration_cast<std::chrono::microseconds>( end - start ).count();
+
+            start = high_resolution_clock::now();
+            long long PPRRresidual = PPrepeatedRandom(inputs, max_iter);
+            end = high_resolution_clock::now();
+            auto duration5 = std::chrono::duration_cast<std::chrono::microseconds>( end - start ).count();
+
+            start = high_resolution_clock::now();
+            long long PPHCresidual = PPhillClimbing(inputs, max_iter);
+            end = high_resolution_clock::now();
+            auto duration6 = std::chrono::duration_cast<std::chrono::microseconds>( end - start ).count();
+
+            start = high_resolution_clock::now();
+            long long PPSAresidual = PPsimulatedAnnealing(inputs, max_iter);
+            end = high_resolution_clock::now();
+            auto duration7 = std::chrono::duration_cast<std::chrono::microseconds>( end - start ).count();
+
+            output.open ("/Users/vmao/Desktop/CS124/Proj3/100trials_output.txt", ios::app);
+            output << KKresidual << "\t" << RRresidual << "\t" << HCresidual << "\t" << SAresidual <<
+                    "\t" << PPRRresidual << "\t" << PPHCresidual << "\t" << PPSAresidual << "\n";
+            output.close();
+
+            times.open ("/Users/vmao/Desktop/CS124/Proj3/100trials_times.txt", ios::app);
+            times << duration1 << "\t" << duration2 << "\t" << duration3 << "\t" << duration4 <<
+                   "\t" << duration5 << "\t" << duration6 << "\t" << duration7 << "\n";
+            times.close();
+        }
     }
+
 }
 
 

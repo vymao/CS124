@@ -4,6 +4,7 @@
 #include "localSearch.h"
 #include <fstream>
 #include <stdlib.h>
+#include <random>
 using namespace std;
 
 
@@ -74,11 +75,27 @@ int main(int argc, char *argv[]) {
             cout << residual;
         }
     } else {
-        vector<int> S = generateS(10);
-        for (auto val : S) {
-            cout << val << " ";
+        /*
+        vector<long long int> input = {10, 8, 7, 6, 5};
+        vector<int> P = {1, 2, 2, 2, 5};
+        vector<long long int> localCost = computeCost(P, input);
+        long long int localResidual = Karmarkar_Karp(localCost);
+        cout << localResidual;
+
+        for (int i = 0; i < max_iter; i++) {
+            vector<int> neighbor = generateP(input.size());
+            vector<long long int> localCost = computeCost(neighbor, input_list);
+            long long int localResidual = Karmarkar_Karp(localCost);
+            if (localResidual < residual) {
+                residual = localResidual;
+            }
         }
-        cout << "\n";
+         */
+        random_device rd;
+        mt19937_64 gen(rd());
+
+        uniform_int_distribution<long long> distribution(1, llround(pow(10, 12)));
+        cout << distribution(gen);
 
     }
 }
